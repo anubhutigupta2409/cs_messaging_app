@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React from "react";
+
+export default function App() {
+
+  async function fetchMessages()
+  {
+    console.log("hi")
+    const resp = await fetch('http://localhost:8080/');
+    const res = await resp.json();
+    console.log(res[0]);
+    const obj = JSON.parse(JSON.stringify(res[0]))
+    //const obj = JSON.parse(res[0]);
+    console.log(obj);
+    console.log(obj.message);
+
+     //url encode message
+    let msg = encodeURIComponent("Hi can i get the batch number");
+    console.log(msg);
+
+    const url = "http://localhost:8080/"+msg;
+
+    const resp2 = await fetch(url,{
+      method:'PUT',
+      headers:{
+        'Content-Type' : 'application/json'
+      },
+      body : JSON.stringify({
+        response :'Noted!',
+        isAnswered : true
+      })
+    });
+  }
+
+
+
+  fetchMessages();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    Hi!
     </div>
   );
 }
 
-export default App;
+
