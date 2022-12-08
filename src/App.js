@@ -8,15 +8,17 @@ const socket = io.connect("http://localhost:3001");
 
 export default function App() {
 
-  let messageList;
+  let messagesList;
   const [userName, setUserName] = useState("");
   const [room, setRoom] = useState("");
+  const [showChat, setShowChat] = useState(false);
 
   //joining a room as an agent and answer user queries-->
   const joinRoom =() =>{
 
     if(userName!=="" && room!=""){
       socket.emit("join_room",room);
+      setShowChat(true);
     }
 
   };
@@ -25,8 +27,8 @@ export default function App() {
   {
     const resp = await fetch('http://localhost:8080/');
     const res = await resp.json();
-    messageList = JSON.parse(JSON.stringify(res))
-    console.log(messageList)
+    messagesList = JSON.parse(JSON.stringify(res))
+    console.log(messagesList)
   //  objs.sort((a, b) => a.userId - b.userId);
   //  console.log(objs);
 
@@ -53,7 +55,7 @@ export default function App() {
   {
    
    // url encode message
-    let msg = encodeURIComponent(messageList[0].message);
+    let msg = encodeURIComponent(messagesList[0].message);
     console.log(msg);
 
   
@@ -76,21 +78,25 @@ export default function App() {
  //fetchMessages();
 
   return (
-    <div className="message-container">
-    <form id="send-container">
+  
       <div className="App">
-      <h3>Start answering queries!</h3>
-      <input type="text" placeholder="Role" onChange={(event) => {setUserName(event.target.value);}}/>
-      <input type="text" placeholder="Room ID" onChange={(event) => {setRoom(event.target.value);}}/>
-      {/* type = "button" is added so that the page doesnot refreshes on button click, because buttons 
-      are by default of type submit. */}
-      <button type="button" onClick={joinRoom}>Start Responding to customer queries..</button>
-      <Chat socket={socket} username = {userName} room={room}/>
-      {/* <input type="text" id="message-input"></input>
-      <button type="submit" id="send-button" onClick={sendResponse}>Send</button> */}
+      {!showChat ? (
+      <div className="joinChatContainer">
+        <h3>Join A Chat</h3>
+        <input type="text" placeholder="Role" onChange={(event) => {setUserName(event.target.value);}}/>
+        <input type="text" placeholder="Room ID" onChange={(event) => {setRoom(event.target.value);}}/>
+        {/* type = "button" is added so that the page doesnot refreshes on button click, because buttons 
+        are by default of type submit. */}
+        <button type="button" onClick={joinRoom}>Start Responding to customer queries..</button>
+        
+       
+     
+      </div> 
+      ) : (
+       <Chat socket={socket} username = {userName} room={room}/>
+      )}
       </div>
-    </form>
-    </div>
+   
   );
 }
 
