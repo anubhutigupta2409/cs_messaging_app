@@ -8,29 +8,32 @@ function Chat({socket, username, room}) {
     const[agentMessage, setAgentMessage] = useState("");
     const[agentMessageList, setAgentMessageList] = useState([]);
     const[agentName, setAgentName] = useState("");
-    const[active, setActive] = useState();
+    const[userName, setUserName] = useState();
+    const[agent, setAgent] = useState();
     const[user, setUser] = useState();
     const[userMessage,setUserMessage] = useState("");
-   
+    //const[userMessagesList, setUserMessagesList] = useState([]);
     
 
+    let userMessagesList=[];
     
     let messagesList;
+   
   
     function clear()
     {
         setUser("");
-        setActive("");
+        setAgent("");
     }
 
     async function fetchMessages()
   {
     
-    clear();
+    
     const resp = await fetch('http://localhost:8080/');
     const res = await resp.json();
     console.log(res);
-    //filter out messages that our not responded, using field isAnswered
+    //filter out messages that are not responded, using field isAnswered
     messagesList = await JSON.parse(JSON.stringify(res)).filter(function(entry){
                                                         return entry.isAnswered === false;
                                                                           });
@@ -38,9 +41,20 @@ function Chat({socket, username, room}) {
                                                             
     console.log(messagesList);
 
-    //setting userMessageObject and message;
-   
+    //setting user states
+    if(userName===messagesList[0].userId)
+    {
+       console.log("Same user detected!");
+    }
+    else
+    {
+       userMessagesList.length=[];
+       clear();
+    }
     setUserMessage(messagesList[0].message);
+    userMessagesList.push(messagesList[0].message);
+    setUserName(messagesList[0].userId);
+    console.log("userMessagesList", userMessagesList);
     setUser("user");
                                                                      
   }
@@ -74,7 +88,7 @@ function Chat({socket, username, room}) {
         const messageData ={
 
             message : agentMessage,
-            author : username,
+            author : agentName,
             room : room,
             
         };
@@ -82,7 +96,7 @@ function Chat({socket, username, room}) {
         await socket.emit("send_message", messageData);
         setAgentMessageList((list) => [...list, messageData]);
 
-        setActive("agent");
+        setAgent("agent");
         }
 
     }
@@ -110,16 +124,17 @@ function Chat({socket, username, room}) {
               
                             <div>
                                 <div className="message-content">
-                                    <p>{userMessage}</p>
-                                    
+                                    <p>{userMessage}</p>   
                                 </div>
-                      
+                                <div className="message-meta">
+                                <p id="author">{userName}</p>
+                                </div>
                 
                             </div>
                         </div>
                 }         
                         {
-                            active === "agent"
+                            agent === "agent"
                             &&
                          agentMessageList.map((messageContent) => {
                          return(
@@ -127,6 +142,9 @@ function Chat({socket, username, room}) {
                             <div>
                                 <div className='message-content'>
                                         <p>{messageContent.message}</p>
+                                </div>
+                                <div className="message-meta">
+                                <p id="author">{messageContent.author}</p>
                                 </div>
                             </div>
                         </div>);
@@ -142,7 +160,7 @@ function Chat({socket, username, room}) {
                     <button type="button" onClick={sendMessage}>&#9658;</button>
                 </div>
             </div>
-            <button  id="query-button" type="button" onClick={fetchMessages}>See query</button>
+            <button  id="query-button" type="button" onClick={fetchMessages}>See new query</button>
             </div>
         );
     
