@@ -3,12 +3,15 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const dbConnect = require('./mongodb')
+
 const projection = { _id: 0};
+
 
 
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
 
 const cors=require("cors");
 const corsOptions ={
@@ -25,22 +28,15 @@ app.use(morgan('tiny'));
 
 app.use(express.json());
 
+//for getting message list from database
 app.get('/',async (req,resp) =>{
     let data = await dbConnect();
     data = await data.find({}).project(projection).toArray();
     data = JSON.parse(JSON.stringify(data))
     resp.send(data);
-   // console.log(data);
 });
 
-// //route not required in this project, implemented for future use
-// app.post('/', async (req,resp) => {
-//     // resp.send({name:"Anu"})
-//     let data = await dbConnect();
-//     let result = await data.insert(req.body);
-//     resp.send(result);
-// });
-
+//for updating response given my agent
 app.put('/:message', async (req,resp)=>{
     let data = await dbConnect();
     let result = await data.updateOne(
@@ -48,6 +44,11 @@ app.put('/:message', async (req,resp)=>{
         {$set:req.body}
     )
     resp.send(result);
+});
+
+//server for chatting
+app.get('/chat',(req, resp)=>{
+    resp.sendFile("Hello");
 });
 
 
