@@ -13,7 +13,10 @@
 * Agent UI have been made interactive using socket.io technology, so that new incoming messages can show up real time.   
 
 ## Demo Video
-[Demo Video](https://www.youtube.com/watch?v=DgARl1SxYAA) {YouTube Unlisted Video}
+[Demo Video](https://www.youtube.com/watch?v=DgARl1SxYAA) {YouTube Unlisted Video}  
+
+## App Flow
+![untitled@2x](https://user-images.githubusercontent.com/56643076/206699768-bb448d6f-3364-42c0-882e-9788187a192e.png)
 
 ## Dependencies to isntall  
 
