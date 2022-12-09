@@ -1,6 +1,16 @@
 # CS Messaging App
 
+## Basic requirements implemented
 
+* A react web app which allows agents of branch international to view and respond to customer queries in a streamlined fashion.
+* Provided .csv file is stored in mongodb as database.
+* API end points have been developed to fetch the customer queries from database, and send response to corresponding customer queries. 
+
+## Extra Functionalities added
+
+* A boolean flag is added in the database, so that the other agents are not shown the same query which has already been answered.
+* Additional information about the customer has been surfaced in the UI, being only customer's userId as of now, so that the agents can get context.
+* Agent UI have been made interactive using socket.io technology, so that new incoming messages can show up real time. 
 
 ## Available Scripts
 
