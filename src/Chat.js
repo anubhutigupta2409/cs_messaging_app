@@ -14,8 +14,6 @@ function Chat({socket, username, room}) {
     const[userMessage,setUserMessage] = useState("");
    
     
-
-    
     let messagesList;
   
     function clear()
@@ -24,6 +22,7 @@ function Chat({socket, username, room}) {
         setAgent("");
     }
 
+    //function for fetching messages
     async function fetchMessages()
   {
     
@@ -48,7 +47,9 @@ function Chat({socket, username, room}) {
                                                                      
   }
     
-    const sendMessage = async() => {
+  //function for responding to customer queiries
+    async function sendMessage()
+    {
 
         setAgentName(username);
     
