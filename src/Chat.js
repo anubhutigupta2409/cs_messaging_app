@@ -27,7 +27,7 @@ function Chat({socket, username, room}) {
   {
     
     clear();
-    const resp = await fetch('http://localhost:8080/');
+    const resp = await fetch('http://localhost:8080/query');
     const res = await resp.json();
     console.log(res);
     //filter out messages that are not responded, using field isAnswered
@@ -60,7 +60,7 @@ function Chat({socket, username, room}) {
         console.log(encodeURIComponent(userMessage));
 
   
-        const url = "http://localhost:8080/"+encodeURIComponent(userMessage);
+        const url = "http://localhost:8080/query/"+encodeURIComponent(userMessage);
         console.log(url);
 
 
