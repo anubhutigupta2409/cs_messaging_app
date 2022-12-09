@@ -12,13 +12,11 @@ function Chat({socket, username, room}) {
     const[agent, setAgent] = useState();
     const[user, setUser] = useState();
     const[userMessage,setUserMessage] = useState("");
-    //const[userMessagesList, setUserMessagesList] = useState([]);
+   
     
 
-    let userMessagesList=[];
     
     let messagesList;
-   
   
     function clear()
     {
@@ -29,7 +27,7 @@ function Chat({socket, username, room}) {
     async function fetchMessages()
   {
     
-    
+    clear();
     const resp = await fetch('http://localhost:8080/');
     const res = await resp.json();
     console.log(res);
@@ -43,18 +41,9 @@ function Chat({socket, username, room}) {
 
     //setting user states
     if(userName===messagesList[0].userId)
-    {
        console.log("Same user detected!");
-    }
-    else
-    {
-       userMessagesList.length=[];
-       clear();
-    }
     setUserMessage(messagesList[0].message);
-    userMessagesList.push(messagesList[0].message);
     setUserName(messagesList[0].userId);
-    console.log("userMessagesList", userMessagesList);
     setUser("user");
                                                                      
   }
@@ -103,7 +92,7 @@ function Chat({socket, username, room}) {
 
     useEffect( ()=> {socket.on("receive_message", (data)=>{
         setAgentMessageList((list) => [...list, data]);
-        //console.log(data);
+        
     })}, [socket]);
     
         return (
@@ -136,19 +125,18 @@ function Chat({socket, username, room}) {
                         {
                             agent === "agent"
                             &&
-                         agentMessageList.map((messageContent) => {
-                         return(
+                        
                         <div className='message' id="you" > 
                             <div>
                                 <div className='message-content'>
-                                        <p>{messageContent.message}</p>
+                                        <p>{agentMessage}</p>
                                 </div>
                                 <div className="message-meta">
-                                <p id="author">{messageContent.author}</p>
+                                <p id="author">You</p>
                                 </div>
                             </div>
-                        </div>);
-                        })
+                        </div>
+                        
                     }
                 
                  
