@@ -16,11 +16,11 @@
 
 In the project directory install the following dependencies using the following command:
 
-###` npm i concurrently cors express mongodb morgan react react-dom react-scripts socket.io --save ` 
+#### `npm i concurrently cors express mongodb morgan react react-dom react-scripts socket.io --save ` 
 
 In the project/src directory install the following dependency using the following command:
 
-### `npm i socket.io-client --save`
+#### `npm i socket.io-client --save`
 
 ## How to run the project
 
