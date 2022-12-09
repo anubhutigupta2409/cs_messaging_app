@@ -12,6 +12,9 @@
 * Additional information about the customer has been surfaced in the UI, being only customer's userId as of now, so that the agents can get context.
 * Agent UI have been made interactive using socket.io technology, so that new incoming messages can show up real time.   
 
+## Demo Video
+[Demo Video](https://www.youtube.com/watch?v=DgARl1SxYAA) {YouTube Unlisted Video}
+
 ## Dependencies to isntall  
 
 In the project directory install the following dependencies using the following command:
