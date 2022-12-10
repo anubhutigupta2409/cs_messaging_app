@@ -16,7 +16,17 @@
 [Demo Video](https://www.youtube.com/watch?v=DgARl1SxYAA) {YouTube Unlisted Video}  
 
 ## App Flow
-![untitled@2x](https://user-images.githubusercontent.com/56643076/206699768-bb448d6f-3364-42c0-882e-9788187a192e.png)
+![untitled@2x](https://user-images.githubusercontent.com/56643076/206699768-bb448d6f-3364-42c0-882e-9788187a192e.png)  
+
+## Software Installations 
+  
+* Install Node.js from [here](https://nodejs.org/en/).
+* Install MongoDB from [here](https://www.mongodb.com/try/download/community).
+
+## Database Setup
+* Open MongoDB Compass.
+* Create a Database named `customerData` and a collection named `sample`
+* Import the `sample.json` file in the collection.
 
 ## Dependencies to isntall  
 
